@@ -52,8 +52,7 @@
 			<id>dev</id>
 			<activation>
 				<property>
-					<name>dev</name>
-					<value>true</value>
+					<name>!dev</name>
 				</property>
 			</activation>
 

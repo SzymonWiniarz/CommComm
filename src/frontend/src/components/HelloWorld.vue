@@ -1,7 +1,3 @@
-<template>
-  <h1>{{ msg }}</h1>
-</template>
-
 <script>
 export default {
   name: 'HelloWorld',
@@ -14,9 +10,12 @@ export default {
     fetch("/api/messages/hello")
       .then((response) => response.text())
       .then((data) => {
-          this.msg = "Static from HelloWorld component";
+          this.msg = data;
       });
   }
 }
 </script>
 
+<template>
+  <h1>{{ msg }}</h1>
+</template>
