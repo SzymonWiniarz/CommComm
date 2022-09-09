@@ -1,19 +1,19 @@
 <script>
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   data() {
     return {
-      msg: ''
-    }
+      msg: "",
+    };
   },
   mounted() {
     fetch("/api/messages/hello")
       .then((response) => response.text())
       .then((data) => {
-          this.msg = data;
+        this.msg = data;
       });
-  }
-}
+  },
+};
 </script>
 
 <template>

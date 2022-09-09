@@ -4,10 +4,10 @@ export default {
 
   data() {
     return {
-      'msg': 'Welcome home!'
-    }
-  }
-}
+      msg: "Welcome home!",
+    };
+  },
+};
 </script>
 
 <template>

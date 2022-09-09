@@ -1,0 +1,34 @@
+<script>
+export default {
+  props: {
+    target: String,
+    text: String,
+  },
+};
+</script>
+
+<template>
+  <div class="row cc-menu-item text-center g-0">
+    <router-link :to="target">{{ text }}</router-link>
+  </div>
+</template>
+
+<style scoped>
+    .cc-menu-item {
+        color: white;
+        text-decoration: none;
+    }
+
+    .cc-menu-item:hover, .router-link-active {
+        background-color: #339999;
+    }
+
+    .cc-menu-item > a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        height: 100%;
+        padding: 10px 0;
+    }
+
+</style>
