@@ -13,14 +13,16 @@ export default {
       <img class="cc-logo" src="../../assets/images/bus-logo.png" />
       <div class="cc-logo-title">CommComm</div>
     </div>
-    <MenuItem target="/hello" text="Go to Hello" />
-    <MenuItem target="/bye" text="Go to Bye" />
+    <MenuItem target="/" text="Pulpit" />
+    <MenuItem target="/dzieci" text="Dzieci" />
+    <MenuItem target="/samochody" text="Samochody" />
+    <MenuItem target="/przewozy" text="Przewozy" />
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .cc-main-menu {
-  background-color: #004d4d;
+  background-color: $color-steel-teal;
   color: white;
 }
 

@@ -13,22 +13,18 @@ export default {
   </div>
 </template>
 
-<style scoped>
-    .cc-menu-item {
-        color: white;
-        text-decoration: none;
-    }
+<style lang="scss" scoped>
+.cc-menu-item:hover,
+.router-link-active {
+  background-color: $color-riffle-green;
+}
 
-    .cc-menu-item:hover, .router-link-active {
-        background-color: #339999;
-    }
-
-    .cc-menu-item > a {
-        color: white;
-        text-decoration: none;
-        display: block;
-        height: 100%;
-        padding: 10px 0;
-    }
-
+.cc-menu-item > a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  height: 100%;
+  padding: 10px 0;
+  font-size: 18pt;
+}
 </style>

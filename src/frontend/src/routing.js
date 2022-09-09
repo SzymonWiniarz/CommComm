@@ -1,21 +1,26 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Home from './components/Home.vue'
-import HelloWorld from './components/HelloWorld.vue'
-import Bye from './components/Bye.vue'
+import Dashboard from './components/Dashboard.vue'
+import Kids from './components/Kids.vue'
+import Cars from './components/Cars.vue'
+import Commuting from './components/Commuting.vue'
 
 const routes = [
     {
         path: '/',
-        component: Home
+        component: Dashboard
     },
     {
-        path: '/hello',
-        component: HelloWorld
+        path: '/dzieci',
+        component: Kids
     },
     {
-        path: '/bye',
-        component: Bye
+        path: '/samochody',
+        component: Cars
+    },
+    {
+        path: '/przewozy',
+        component: Commuting
     }
 ]
 

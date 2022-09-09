@@ -20,5 +20,13 @@ export default defineConfig({
           changeOrigin: true
       }
     }
+  },
+
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import '@/scss/main.scss';`
+      }
+    }
   }
 })
