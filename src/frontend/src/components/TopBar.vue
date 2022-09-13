@@ -55,7 +55,7 @@ export default {
   width: 50px;
   display: inline-block;
   text-align: center;
-  background-color: $color-camel;
+  background-color: $color-info;
   border-radius: 50%;
   margin: 10px;
   font-size: 18pt;

@@ -16,7 +16,7 @@ export default {
 <style lang="scss" scoped>
 .cc-menu-item:hover,
 .router-link-active {
-  background-color: $color-riffle-green;
+  background-color: $color-primary-hover;
 }
 
 .cc-menu-item > a {

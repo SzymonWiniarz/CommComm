@@ -22,7 +22,7 @@ export default {
 
 <style lang="scss" scoped>
 .cc-main-menu {
-  background-color: $color-steel-teal;
+  background-color: $color-primary;
   color: white;
 }
 
