@@ -1,17 +1,29 @@
 <script>
+import { useUserStore } from "@/stores/user_store";
+import { mapState } from "pinia";
+
 export default {
   name: "TopBar",
 
-  props: {
-    userFirstName: String,
-    userLastName: String,
+  computed: {
+    ...mapState(useUserStore, ["user"]),
+    
+    userInitials() {
+      if (!this.user) {
+        return "N/A";
+      }
+
+      return (
+        this.user.firstName[0].toUpperCase() +
+        this.user.lastName[0].toUpperCase()
+      );
+    },
   },
 
-  computed: {
-    userInitials() {
-      return (
-        this.userFirstName[0].toUpperCase() + this.userLastName[0].toUpperCase()
-      );
+  methods: {
+    openEditUserView() {
+      const userId = this.user.id;
+      this.$router.push({ path: "/uzytkownicy/" + userId });
     },
   },
 };
@@ -30,7 +42,7 @@ export default {
         justify-content-center
       "
     >
-      <div class="col-12">
+      <div class="col-12" @click="openEditUserView">
         {{ userInitials }}
       </div>
     </div>
@@ -49,5 +61,6 @@ export default {
   font-size: 18pt;
   color: white;
   padding: 0;
+  cursor: pointer;
 }
 </style>
