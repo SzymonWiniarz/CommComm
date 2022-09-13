@@ -1,7 +1,7 @@
 <script>
 import PageTitle from "../page/PageTitle.vue";
 import PageContent from "../page/PageContent.vue";
-import {useUserStore} from "../../stores/user_store";
+import {useUserStore} from "@/stores/user_store";
 import {mapState} from "pinia";
 
 export default {
@@ -15,6 +15,24 @@ export default {
   },
 
   methods: {
+    validateForm() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          })
+    },
+
     updateUser() {
       alert("User updated!")
     }
@@ -27,7 +45,7 @@ export default {
   <PageTitle title="Edytuj dane użytkownika"/>
   <PageContent>
     <div class="row justify-content-center">
-      <form id="userForm" class="justify-content-center" @submit.prevent="updateUser">
+      <form id="userForm" class="justify-content-center was-validated" @submit.prevent="validateForm & updateUser" novalidate>
         <div class="row mb-3">
           <div class="col">
             <label for="userFirstName" class="form-label">Imię</label>
@@ -42,10 +60,16 @@ export default {
           <div class="col">
             <label for="userEmail" class="form-label">Email</label>
             <input type="email" id="userEmail" class="form-control" v-model="user.email" required>
+            <div class="invalid-feedback">
+              Podaj poprawny adres email
+            </div>
           </div>
           <div class="col">
             <label for="userPhone" class="form-label">Telefon</label>
-            <input type="tel" id="userPhone" class="form-control" pattern="^\d{3}-\d{3}-\d{3}$" v-model="user.phone">
+            <input type="tel" id="userPhone" class="form-control" pattern="^\d{9}$" v-model="user.phone">
+            <div class="invalid-feedback">
+              Podaj poprawny numer telefonu
+            </div>
           </div>
         </div>
         <div class="row mb-3">
@@ -62,7 +86,8 @@ export default {
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" v-model="user.canNotifyByWhatsApp" id="canNotifyUserByWhatsApp">
+            <input class="form-check-input" type="checkbox" v-model="user.canNotifyByWhatsApp"
+                   id="canNotifyUserByWhatsApp">
             <label class="form-check-label" for="canNotifyUserByWhatsApp">
               Powiadamiaj mnie na WhatsApp
             </label>
