@@ -1,6 +1,7 @@
 <script>
 import PageTitle from "./page/PageTitle.vue";
 import PageContent from "./page/PageContent.vue";
+
 export default {
   name: "Cars",
   components: { PageTitle, PageContent },

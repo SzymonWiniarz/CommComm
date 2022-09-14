@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-  <div class="row">
+  <div class="row mb-5">
     <h1 class="cc-title">{{ title }}</h1>
   </div>
 </template>
@@ -15,6 +15,5 @@ export default {
 <style scoped>
 .cc-title {
   font-size: 48pt;
-  margin-bottom: 50px;
 }
 </style>

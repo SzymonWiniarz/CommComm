@@ -5,6 +5,7 @@ import Kids from './components/Kids.vue'
 import Cars from './components/Cars.vue'
 import Commuting from './components/Commuting.vue'
 import EditUser from './components/user/EditUser.vue'
+import AddKid from './components/kids/AddKid.vue'
 
 const routes = [
     {
@@ -14,6 +15,10 @@ const routes = [
     {
         path: '/dzieci',
         component: Kids
+    },
+    {
+        path: '/dzieci/dodaj',
+        component: AddKid
     },
     {
         path: '/samochody',

@@ -4,14 +4,8 @@ export const useUserStore = defineStore("user", {
 
     state: () => {
         return {
-            user: null
-        }
-    },
-
-    actions: {
-        getById(idParam) {
-            this.user = {
-                id: idParam,
+            user: {
+                id: 1,
                 firstName: "Szymon",
                 lastName: "Winiarz",
                 email: "sz@w.pl",
@@ -20,11 +14,18 @@ export const useUserStore = defineStore("user", {
                 canNotifyByWhatsApp: false,
                 canNotifyByEmail: true
             }
-        },
+        }
+    },
 
-        update(newFirstName, newLastName) {
-            this.firstName = newFirstName;
-            this.lastName = newLastName;
+    getters: {
+        getUser() {
+            return Object.assign({}, this.user);
+        }
+    },
+
+    actions: {
+        update(updatedUser) {
+            this.user = updatedUser;
         }
     }
 
