@@ -13,7 +13,7 @@ export const useKidsStore = defineStore("kids", {
         create(kid) {
             const nextId = (this.kidId++).toString;
             kid.id = nextId;
-            this.kids.push.kid;
+            this.kids.push(kid);
         },
 
         delete(id) {
@@ -22,6 +22,10 @@ export const useKidsStore = defineStore("kids", {
 
         getById(id) {
             return Object.assign({}, this.kids.find((kid) => kid.id == id));
+        },
+
+        getAll() {
+            return this.kids.map((kid) => Object.assign({}, kid));
         },
 
         update(kid) {
