@@ -1,10 +1,14 @@
 <script>
 import Form from "../Form.vue";
+import { mapActions } from "pinia";
+import { useKidsStore } from "../../stores/kids_store";
+
 export default {
   components: { Form },
 
   props: {
     kidParam: Object,
+    action: String,
   },
 
   data() {
@@ -14,9 +18,22 @@ export default {
   },
 
   methods: {
+    ...mapActions(useKidsStore, {
+      createKidAction: "create",
+      updateKidAction: "update",
+    }),
+
     saveKidForm() {
-      alert("Dodano dziecko!");
+      if (this.action == "create") {
+        this.createKidAction(this.kid);
+      } else {
+        this.updateKidAction(this.kid);
+      }
+
+      this.$emit("submitted");
     },
+
+    emits: ["submitted"],
   },
 };
 </script>

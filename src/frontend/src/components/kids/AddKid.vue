@@ -3,8 +3,9 @@ import PageContent from "../page/PageContent.vue";
 import PageTitle from "../page/PageTitle.vue";
 import Form from "../Form.vue";
 import KidForm from "./KidForm.vue";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useUserStore } from "../../stores/user_store";
+import { useAlertsStore } from "../../stores/alerts_store";
 
 export default {
   components: { PageContent, PageTitle, Form, KidForm },
@@ -14,12 +15,25 @@ export default {
       user: "getUser",
     }),
   },
+
+  methods: {
+    ...mapActions(useAlertsStore, ["showAlert"]),
+
+    kidCreated() {
+      this.showAlert("Dodano nowe dziecko", "success");
+      this.$router.push({ path: "/dzieci" });
+    },
+  },
 };
 </script>
 
 <template>
   <PageTitle title="Dodaj dziecko" />
   <PageContent>
-    <KidForm :kidParam="{ lastName: user.lastName }" />
+    <KidForm
+      :kidParam="{ lastName: user.lastName }"
+      action="create"
+      @submitted="kidCreated"
+    />
   </PageContent>
 </template>

@@ -1,6 +1,6 @@
 <script>
-import PageTitle from "./page/PageTitle.vue";
-import PageContent from "./page/PageContent.vue";
+import PageTitle from "../page/PageTitle.vue";
+import PageContent from "../page/PageContent.vue";
 export default {
   name: "Kids",
   components: { PageTitle, PageContent },
