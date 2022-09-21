@@ -26,6 +26,7 @@ export default {
       this.updateUser(this.user);
     },
   },
+
 };
 </script>
 

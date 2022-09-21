@@ -11,7 +11,7 @@ export const useKidsStore = defineStore("kids", {
 
     actions: {
         create(kid) {
-            const nextId = (this.kidId++).toString;
+            const nextId = (this.kidId++).toString();
             kid.id = nextId;
             this.kids.push(kid);
         },

@@ -1,7 +1,7 @@
 <script>
 import {useAlertsStore} from "@/stores/alerts_store";
 
-const ALERT_TIMEOUT_MILLIS = 2000;
+const ALERT_TIMEOUT_MILLIS = 3000;
 
 const ALERT_TEMPLATE = `
 <div class="alert alert-{{type}} alert-dismissible fade show"

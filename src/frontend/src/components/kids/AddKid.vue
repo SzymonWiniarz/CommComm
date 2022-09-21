@@ -23,10 +23,6 @@ export default {
       this.showAlert("Dodano nowe dziecko", "success");
       this.$router.push({ path: "/dzieci" });
     },
-
-    testAlert() {
-      this.showAlert("Test alert!", "danger");
-    }
   },
 };
 </script>
@@ -34,7 +30,6 @@ export default {
 <template>
   <PageTitle title="Dodaj dziecko" />
   <PageContent>
-    <button @click="testAlert">Test alert</button>
     <KidForm
       :kidParam="{ lastName: user.lastName }"
       action="create"

@@ -6,13 +6,22 @@ import {useKidsStore} from "@/stores/kids_store";
 import {mapActions} from "pinia";
 
 export default {
-  name: "Kids",
   components: { PageTitle, PageContent, KidCard },
+
+  data() {
+    return {
+      kids: []
+    }
+  },
 
   methods: {
     ...mapActions(useKidsStore, {
       getAllKids: "getAll"
     })
+  },
+
+  mounted() {
+    this.kids = this.getAllKids();
   }
 };
 </script>
@@ -26,7 +35,7 @@ export default {
       </div>
     </div>
     <div class="row mb3">
-      <div class="col-auto" v-for="kid in getAllKids()">
+      <div class="col-auto" v-for="kid in kids" :key="kid.id">
         <KidCard :kid="kid"/>
       </div>
     </div>

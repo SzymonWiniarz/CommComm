@@ -17,7 +17,13 @@ export default {
       }
 
       return ""
-    }
+    },
+
+    openEditKidView() {
+      const kidId = this.kid.id;
+      this.$router.push({path: "/dzieci/" + kidId});
+    },
+
   }
 }
 </script>
@@ -25,7 +31,7 @@ export default {
 <template>
   <div class="card cc-kid-card">
     <div class="card-body">
-      <h5 class="card-title">{{ kid.firstName + " " + kid.lastName }}</h5>
+      <h5 class="card-title" @click="openEditKidView">{{ kid.firstName + " " + kid.lastName }}</h5>
       <p class="card-text">
         <span class="badge" :class="kid.sex.toLowerCase()">{{ this.getSexText() }}</span>
         <span v-if="kid.doesNeedBabySeat" class="badge bg-secondary">Fotelik</span>
@@ -35,10 +41,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.cc-kid-card {
-  cursor: pointer;
-}
-
 .badge.girl {
   background-color: $color-pink;
 }

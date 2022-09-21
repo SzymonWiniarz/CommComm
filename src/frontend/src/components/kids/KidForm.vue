@@ -106,6 +106,7 @@ export default {
         </div>
       </div>
       <button type="submit" class="btn btn-primary mb-3">Zapisz</button>
+      <slot></slot>
     </Form>
   </div>
 </template>

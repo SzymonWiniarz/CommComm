@@ -71,6 +71,5 @@ export default {
   font-size: 18pt;
   color: white;
   padding: 0;
-  cursor: pointer;
 }
 </style>
