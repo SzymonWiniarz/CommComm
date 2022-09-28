@@ -7,8 +7,8 @@ import { mapActions, mapState } from "pinia";
 import { useUserStore } from "../../stores/user_store";
 import { useAlertsStore } from "../../stores/alerts_store";
 import { useKidsStore } from "../../stores/kids_store";
-import Modal from "../modal/Modal.vue";
 import ModalTriggerButton from "../modal/ModalTriggerButton.vue";
+import DeleteKidModal from "./DeleteKidModal.vue";
 
 export default {
   components: {
@@ -16,8 +16,8 @@ export default {
     PageTitle,
     Form,
     KidForm,
-    Modal,
     ModalTriggerButton,
+    DeleteKidModal,
   },
 
   props: {
@@ -34,21 +34,11 @@ export default {
     ...mapState(useUserStore, {
       user: "getUser",
     }),
-
-    kidDeletionModalText() {
-      return (
-        "Czy na pewno chcesz trwale usunąć informacje o dziecku " +
-        this.kid.firstName +
-        " " +
-        this.kid.lastName +
-        "?"
-      );
-    },
   },
 
   methods: {
     ...mapActions(useAlertsStore, ["showAlert"]),
-    ...mapActions(useKidsStore, ["getById", "delete"]),
+    ...mapActions(useKidsStore, ["getById"]),
 
     kidUpdated() {
       this.showAlert(
@@ -62,22 +52,19 @@ export default {
       return this.getById(this.id);
     },
 
-    deleteKid() {
-      this.delete(this.kid.id);
-      this.showAlert(
-        "Pomyślnie usunięto dziecko " +
-          this.kid.firstName +
-          " " +
-          this.kid.lastName +
-          " z listy",
-        "success"
-      );
-      this.$router.push({ path: "/dzieci" });
+    loadKid() {
+      this.kid = this.getKidById();
+    },
+  },
+
+  watch: {
+    id() {
+      this.loadKid();
     },
   },
 
   created() {
-    this.kid = this.getKidById();
+    this.loadKid();
   },
 };
 </script>
@@ -85,23 +72,35 @@ export default {
 <template>
   <PageTitle title="Edytuj informacje o dziecku" />
   <PageContent>
-    <KidForm v-if="kid" :kidParam="kid" action="update" @submitted="kidUpdated">
-      <div class="row mt-3">
-        <div class="col">
-          <ModalTriggerButton
-            buttonClass="btn-danger"
-            modalId="deleteConfirmationModal"
-            >Usuń</ModalTriggerButton
-          >
-        </div>
+    <div class="row mb-5 justify-content-center">
+      <div class="cc-kid-actions">
+        <ModalTriggerButton
+          buttonClass="btn-danger me-1"
+          modalId="deleteConfirmationModal"
+          >Usuń</ModalTriggerButton
+        >
+        <router-link :to="'/dzieci/' + kid.id + '/plan'" class="btn btn-secondary">Edytuj plan lekcji</router-link>
       </div>
-    </KidForm>
+    </div>
+    <KidForm
+      v-if="kid"
+      :kidParam="kid"
+      action="update"
+      @submitted="kidUpdated"
+    />
+    <div v-else class="row">
+      <div class="col">
+        Nie znaleziono dziecka. Wróć do
+        <router-link to="/dzieci">listy swoich dzieci</router-link> i wybierz
+        jedno z nich lub dodaj nowe.
+      </div>
+    </div>
   </PageContent>
-  <Modal
-    id="deleteConfirmationModal"
-    title="Wymagane potwierdzenie"
-    :text="kidDeletionModalText"
-    actionName="Usuń"
-    @confirmed="deleteKid"
-  />
+  <DeleteKidModal :kid="kid" />
 </template>
+
+<style scoped>
+.cc-kid-actions {
+  width: 80%;
+}
+</style>

@@ -9,6 +9,7 @@ import Commuting from './components/Commuting.vue'
 import EditUser from './components/user/EditUser.vue'
 import AddKid from './components/kids/AddKid.vue'
 import EditKid from './components/kids/EditKid.vue'
+import EditSchedule from './components/schedules/EditSchedule.vue'
 
 const routes = [
     {
@@ -27,6 +28,11 @@ const routes = [
     {
         path: '/dzieci/dodaj',
         component: AddKid
+    },
+    {
+        path: '/dzieci/:id/plan',
+        component: EditSchedule,
+        props: true
     },
     {
         path: '/samochody',

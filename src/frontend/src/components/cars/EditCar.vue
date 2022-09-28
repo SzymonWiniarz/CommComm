@@ -3,11 +3,11 @@ import PageContent from "../page/PageContent.vue";
 import PageTitle from "../page/PageTitle.vue";
 import Form from "../Form.vue";
 import CarForm from "./CarForm.vue";
-import { mapActions, mapState } from "pinia";
+import { mapActions } from "pinia";
 import { useAlertsStore } from "../../stores/alerts_store";
 import { useCarsStore } from "../../stores/cars_store";
-import Modal from "../modal/Modal.vue";
 import ModalTriggerButton from "../modal/ModalTriggerButton.vue";
+import DeleteCarModal from "./DeleteCarModal.vue";
 
 export default {
   components: {
@@ -15,9 +15,9 @@ export default {
     PageTitle,
     Form,
     CarForm,
-    Modal,
     ModalTriggerButton,
-  },
+    DeleteCarModal
+},
 
   props: {
     id: Number,
@@ -29,19 +29,9 @@ export default {
     };
   },
 
-  computed: {
-    deleteCarModalText() {
-      return (
-        "Czy na pewno chcesz trwale usunąć informacje o samochodzie " +
-        this.car.name +
-        "?"
-      );
-    },
-  },
-
   methods: {
     ...mapActions(useAlertsStore, ["showAlert"]),
-    ...mapActions(useCarsStore, ["getById", "delete"]),
+    ...mapActions(useCarsStore, ["getById"]),
 
     carUpdated() {
       this.showAlert(
@@ -55,18 +45,19 @@ export default {
       return this.getById(this.id);
     },
 
-    deleteCar() {
-      this.delete(this.car.id);
-      this.showAlert(
-        "Pomyślnie usunięto samochód " + this.car.name + " z listy",
-        "success"
-      );
-      this.$router.push({ path: "/samochody" });
-    },
+    loadCar() {
+      this.car = this.getCarById(this.id);
+    }
+  },
+
+  watch: {
+    id() {
+      this.loadCar();
+    }
   },
 
   created() {
-    this.car = this.getCarById();
+    this.loadCar();
   },
 };
 </script>
@@ -77,18 +68,19 @@ export default {
     <CarForm v-if="car" :carParam="car" action="update" @submitted="carUpdated">
       <div class="row mt-3">
         <div class="col">
-          <ModalTriggerButton buttonClass="btn-danger" modalId="deleteCarModal"
+          <ModalTriggerButton buttonClass="btn-danger" modalId="deleteConfirmationModal"
             >Usuń</ModalTriggerButton
           >
         </div>
       </div>
     </CarForm>
+    <div v-else class="row">
+      <div class="col">
+        Nie znaleziono samochodu. Wróć do
+        <router-link to="/samochody">listy swoich samochodów</router-link> i
+        wybierz jeden z nich lub dodaj nowy.
+      </div>
+    </div>
   </PageContent>
-  <Modal
-    id="deleteCarModal"
-    title="Wymagane potwierdzenie"
-    :text="deleteCarModalText"
-    actionName="Usuń"
-    @confirmed="deleteCar"
-  />
+  <DeleteCarModal :car="car" />
 </template>

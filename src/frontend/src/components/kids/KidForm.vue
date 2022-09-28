@@ -32,9 +32,15 @@ export default {
 
       this.$emit("submitted");
     },
-
-    emits: ["submitted"],
   },
+
+  watch: {
+    kidParam(newKidParam) {
+      this.kid = newKidParam;
+    }
+  },
+
+  emits: ["submitted"],
 };
 </script>
 
@@ -106,7 +112,6 @@ export default {
         </div>
       </div>
       <button type="submit" class="btn btn-primary mb-3">Zapisz</button>
-      <slot></slot>
     </Form>
   </div>
 </template>

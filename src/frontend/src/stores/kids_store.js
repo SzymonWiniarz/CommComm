@@ -21,7 +21,11 @@ export const useKidsStore = defineStore("kids", {
         },
 
         getById(id) {
-            return Object.assign({}, this.kids.find((kid) => kid.id == id));
+            const foundKid = this.kids.find((kid) => kid.id == id);
+
+            if (foundKid) {
+                return Object.assign({}, foundKid);
+            }
         },
 
         getAll() {

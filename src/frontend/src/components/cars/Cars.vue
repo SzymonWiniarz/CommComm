@@ -4,24 +4,39 @@ import PageContent from "../page/PageContent.vue";
 import CarCard from "./CarCard.vue";
 import { useCarsStore } from '../../stores/cars_store';
 import { mapActions } from 'pinia';
+import DeleteCarModal from "./DeleteCarModal.vue";
 
 export default {
-  components: { PageTitle, PageContent, CarCard },
+  components: { PageTitle, PageContent, CarCard, DeleteCarModal },
 
   data() {
     return {
-      cars: []
+      cars: [],
+      carForDeletion: null,
     }
   },
 
   methods: {
     ...mapActions(useCarsStore, {
       getAllCars: "getAll"
-    })
+    }),
+
+    deleteCarRequested(carForDeletion) {
+      this.carForDeletion = carForDeletion;
+    },
+
+    loadCars() {
+      this.cars = this.getAllCars();
+    },
+
+    carDeleted() {
+      this.loadCars();
+      this.carForDeletion = null;
+    }
   },
 
   mounted() {
-    this.cars = this.getAllCars();
+    this.loadCars();
   }
 };
 </script>
@@ -36,8 +51,9 @@ export default {
     </div>
     <div class="row mb3">
       <div class="col-auto" v-for="car in cars" :key="car.id">
-        <CarCard :car="car"/>
+        <CarCard :car="car" @delete-car-requested="deleteCarRequested"/>
       </div>
     </div>
   </PageContent>
+  <DeleteCarModal :car="carForDeletion" @car-deleted="carDeleted" />
 </template>

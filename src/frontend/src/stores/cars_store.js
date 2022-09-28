@@ -21,7 +21,11 @@ export const useCarsStore = defineStore("cars", {
         },
 
         getById(id) {
-            return Object.assign({}, this.cars.find((car) => car.id == id));
+            const foundCar = this.cars.find((car) => car.id == id);
+
+            if (foundCar) {
+                return Object.assign({}, foundCar);
+            }
         },
 
         getAll() {

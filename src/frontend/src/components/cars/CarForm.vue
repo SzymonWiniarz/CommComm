@@ -32,15 +32,21 @@ export default {
 
       this.$emit("submitted");
     },
-
-    emits: ["submitted"],
   },
+
+  watch: {
+    carParam(newCarParam) {
+      this.car = newCarParam;
+    },
+  },
+
+  emits: ["submitted"],
 };
 </script>
 
 <template>
   <div class="row justify-content-center">
-    <Form id="kidForm" :onSubmit="saveCarForm">
+    <Form id="carForm" :onSubmit="saveCarForm">
       <div class="row mb-3">
         <div class="col">
           <label for="carName" class="form-label">Nazwa</label>
@@ -63,11 +69,17 @@ export default {
             v-model="car.numberOfSeats"
             required
           />
-          <div id="numberOfSeatsHelp" class="form-text">Liczba miejsc w samochodzie dostępnych dla pasażerów</div>
-          <div class="invalid-feedback">Podaj poprawną liczbę miejsc w samochodzie</div>
+          <div id="numberOfSeatsHelp" class="form-text">
+            Liczba miejsc w samochodzie dostępnych dla pasażerów
+          </div>
+          <div class="invalid-feedback">
+            Podaj poprawną liczbę miejsc w samochodzie
+          </div>
         </div>
         <div class="col">
-          <label for="numberOfBabySeats" class="form-label">Liczba fotelików dziecięcych</label>
+          <label for="numberOfBabySeats" class="form-label"
+            >Liczba fotelików dziecięcych</label
+          >
           <input
             type="number"
             id="numberOfBabySeats"
@@ -75,8 +87,12 @@ export default {
             v-model="car.numberOfBabySeats"
             required
           />
-          <div id="numberOfBabySeatsHelp" class="form-text">Liczba fotelików dziecięcych zamontowanch w samochodzie</div>
-          <div class="invalid-feedback">Podaj poprawną liczbę fotelików dziecięcych</div>
+          <div id="numberOfBabySeatsHelp" class="form-text">
+            Liczba fotelików dziecięcych zamontowanch w samochodzie
+          </div>
+          <div class="invalid-feedback">
+            Podaj poprawną liczbę fotelików dziecięcych
+          </div>
         </div>
       </div>
       <button type="submit" class="btn btn-primary mb-3">Zapisz</button>
@@ -86,7 +102,7 @@ export default {
 </template>
 
 <style scoped>
-#kidForm {
+#carForm {
   width: 80%;
 }
 </style>
