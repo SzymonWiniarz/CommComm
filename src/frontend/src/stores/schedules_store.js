@@ -4,17 +4,18 @@ export const useSchedulesStore = defineStore("schedules", {
 
     state: () => {
         return {
-            schedules: {}
+            standardSchedules: {},
+            customSchedules: {},
         }
     },
 
     actions: {
-        saveSchedule(kidId, schedule) {
-            this.schedules[kidId] = schedule;
+        saveStandardSchedule(kidId, schedule) {
+            this.standardSchedules[kidId] = schedule;
         },
 
-        getSchedule(kidId) {
-            const foundSchedule = this.schedules[kidId];
+        getStandardSchedule(kidId) {
+            const foundSchedule = this.standardSchedules[kidId];
 
             if (!foundSchedule) {
                 return [
@@ -22,28 +23,52 @@ export const useSchedulesStore = defineStore("schedules", {
                         dayId: "MONDAY",
                         start: null,
                         end: null,
+                        canDeliverEarlier: false,
+                        canPickUpLater: false
                     },
                     {
                         dayId: "TUESDAY",
                         start: null,
                         end: null,
+                        canDeliverEarlier: false,
+                        canPickUpLater: false
                     },
                     {
                         dayId: "WEDNESDAY",
                         start: null,
                         end: null,
+                        canDeliverEarlier: false,
+                        canPickUpLater: false
                     },
                     {
                         dayId: "THURSDAY",
                         start: null,
                         end: null,
+                        canDeliverEarlier: false,
+                        canPickUpLater: false
                     },
                     {
                         dayId: "FRIDAY",
                         start: null,
                         end: null,
+                        canDeliverEarlier: false,
+                        canPickUpLater: false
                     },
                 ];
+            }
+
+            return foundSchedule.map(day => Object.assign({}, day));
+        },
+
+        saveCustomSchedule(kidId, schedule) {
+            this.customSchedules[kidId] = schedule;
+        },
+
+        getCustomSchedule(kidId) {
+            const foundSchedule = this.customSchedules[kidId];
+
+            if (!foundSchedule) {
+                return [];
             }
 
             return foundSchedule.map(day => Object.assign({}, day));
