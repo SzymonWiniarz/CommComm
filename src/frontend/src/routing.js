@@ -10,6 +10,7 @@ import EditUser from './components/user/EditUser.vue'
 import AddKid from './components/kids/AddKid.vue'
 import EditKid from './components/kids/EditKid.vue'
 import EditSchedule from './components/schedules/EditSchedule.vue'
+import Absences from './components/absences/Absences.vue'
 
 const routes = [
     {
@@ -32,6 +33,11 @@ const routes = [
     {
         path: '/dzieci/:id/plan',
         component: EditSchedule,
+        props: true
+    },
+    {
+        path: '/dzieci/:id/nieobecnosci',
+        component: Absences,
         props: true
     },
     {

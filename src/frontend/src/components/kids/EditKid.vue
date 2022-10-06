@@ -79,7 +79,8 @@ export default {
           modalId="deleteConfirmationModal"
           >Usuń</ModalTriggerButton
         >
-        <router-link :to="'/dzieci/' + kid.id + '/plan'" class="btn btn-secondary">Edytuj plan lekcji</router-link>
+        <router-link :to="'/dzieci/' + kid.id + '/plan'" class="btn btn-secondary me-1">Edytuj plan lekcji</router-link>
+        <router-link :to="'/dzieci/' + kid.id + '/nieobecnosci'" class="btn btn-secondary">Zgłoś nieobecność</router-link>
       </div>
     </div>
     <KidForm

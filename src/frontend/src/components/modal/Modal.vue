@@ -44,6 +44,7 @@ export default {
         </div>
         <div class="modal-body">
           {{ text }}
+          <slot></slot>
         </div>
         <div class="modal-footer">
           <button

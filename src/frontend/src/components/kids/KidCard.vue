@@ -1,10 +1,11 @@
 <script>
 import EditIcon from "../icons/EditIcon.vue";
 import DeleteIcon from "../icons/DeleteIcon.vue";
+import CalendarIcon from "../icons/CalendarIcon.vue";
 import ModalTriggerButton from "../modal/ModalTriggerButton.vue";
 
 export default {
-  components: { EditIcon, DeleteIcon, ModalTriggerButton },
+  components: { EditIcon, DeleteIcon, ModalTriggerButton, CalendarIcon },
 
   props: {
     kid: Object,
@@ -54,6 +55,11 @@ export default {
           class="btn btn-primary cc-quick-action-button"
           :to="'/dzieci/' + kid.id"
           ><EditIcon
+        /></router-link>
+        <router-link
+          class="btn btn-primary cc-quick-action-button"
+          :to="'/dzieci/' + kid.id + '/plan'"
+          ><CalendarIcon
         /></router-link>
         <ModalTriggerButton
           buttonClass="btn-danger cc-quick-action-button"
