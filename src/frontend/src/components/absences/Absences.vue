@@ -11,6 +11,10 @@ import ModalTriggerButton from "../modal/ModalTriggerButton.vue";
 export default {
   components: { PageTitle, PageContent, Modal, ModalTriggerButton },
 
+  props: {
+    id: Number,
+  },
+
   data() {
     return {
       kidName: null,
@@ -19,11 +23,44 @@ export default {
         start: null,
         end: null,
       },
+      absenceForRemoval: null,
+      absenceForUpdate: null,
+      absenceUpdateType: null,
     };
   },
 
-  props: {
-    id: Number,
+  computed: {
+    removeAbsenceModalText() {
+      if (!this.absenceForRemoval) {
+        return null;
+      }
+
+      return (
+        "Czy na pewno chces usunąć nieobecność dziecka " +
+        this.kidName +
+        " zgłoszoną w dniach od " +
+        this.absenceForRemoval.start +
+        " do " +
+        this.absenceForRemoval.end +
+        "?"
+      );
+    },
+
+    updateAbsenceModalText() {
+      if (!this.absenceForUpdate) {
+        return null;
+      }
+
+      return (
+        "Czy na pewno chcesz zmienić datę " +
+        (this.absenceUpdateType == "START" ? "rozpoczęcia" : "zakończenia") +
+        " nieobecności na " +
+        (this.absenceUpdateType == "START"
+          ? this.absenceForUpdate.start
+          : this.absenceForUpdate.end) +
+        "?"
+      );
+    },
   },
 
   methods: {
@@ -53,14 +90,38 @@ export default {
       }, 100);
     },
 
-    updateAbsence(absence) {
-        this.update(this.id, absence);
+    showUpdateAbsenceModal(changeEvent, typeOfChange, absence) {
+      this.absenceForUpdate = absence;
+      this.absenceUpdateType = typeOfChange;
+
+      const updateAbsenceModalElement = document.getElementById("updateAbsenceModal");
+      const updateAbsenceModal = new bootstrap.Modal(updateAbsenceModalElement);
+
+      updateAbsenceModalElement.addEventListener("hidden.bs.modal", (event) => {
         this.loadAbsences();
+      });
+
+      updateAbsenceModal.show();
     },
 
-    removeAbcence(absence) {
-      this.delete(this.id, absence);
-      this.loadAbsences();
+    updateAbsence() {
+      if (this.absenceForUpdate) {
+        this.update(this.id, this.absenceForUpdate);
+        this.absenceForUpdate = null;
+        this.absenceUpdateType = null;
+      }
+    },
+
+    setAbsenceForRemoval(absence) {
+      this.absenceForRemoval = absence;
+    },
+
+    removeAbsence() {
+      if (this.absenceForRemoval) {
+        this.delete(this.id, this.absenceForRemoval);
+        this.loadAbsences();
+        this.absenceForRemoval = null;
+      }
     },
   },
 
@@ -88,18 +149,32 @@ export default {
           <tbody>
             <tr v-for="absence in absences" :key="absence.id">
               <td>
-                <input class="form-control" type="date" v-model="absence.start" @change="updateAbsence(absence)"/>
+                <input
+                  class="form-control"
+                  type="date"
+                  v-model="absence.start"
+                  @change="
+                    (event) => showUpdateAbsenceModal(event, 'START', absence)
+                  "
+                />
               </td>
               <td>
-                <input class="form-control" type="date" v-model="absence.end" @change="updateAbsence(absence)"/>
+                <input
+                  class="form-control"
+                  type="date"
+                  v-model="absence.end"
+                  @change="
+                    (event) => showUpdateAbsenceModal(event, 'END', absence)
+                  "
+                />
               </td>
               <td>
-                <button
-                  type="button"
-                  class="btn-close"
+                <ModalTriggerButton
+                  buttonClass="btn-close"
                   aria-label="Usuń nieobecność"
-                  @click="removeAbcence(absence)"
-                ></button>
+                  modalId="removeAbsenceModal"
+                  @click="setAbsenceForRemoval(absence)"
+                ></ModalTriggerButton>
               </td>
             </tr>
           </tbody>
@@ -119,7 +194,7 @@ export default {
     <label for="newAbsenceStart">od:</label>
     <input
       id="newAbsenceStart"
-      class="form-control"
+      class="form-control mb-3"
       type="date"
       v-model="newAbsence.start"
     />
@@ -132,6 +207,20 @@ export default {
       v-model="newAbsence.end"
     />
   </Modal>
+  <Modal
+    id="removeAbsenceModal"
+    title="Wymagane potwierdzenie"
+    :text="removeAbsenceModalText"
+    actionName="Usuń"
+    @confirmed="removeAbsence"
+  />
+  <Modal
+    id="updateAbsenceModal"
+    title="Wymagane potwierdzenie"
+    :text="updateAbsenceModalText"
+    actionName="Zmień"
+    @confirmed="updateAbsence"
+  />
 </template>
 
 <style scoped>
