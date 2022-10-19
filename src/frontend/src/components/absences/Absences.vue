@@ -7,6 +7,7 @@ import { useAlertsStore } from "../../stores/alerts_store";
 import { useAbsencesStore } from "../../stores/absences_store";
 import Modal from "../modal/Modal.vue";
 import ModalTriggerButton from "../modal/ModalTriggerButton.vue";
+import { todayAsString } from "../../utils.js"
 
 export default {
   components: { PageTitle, PageContent, Modal, ModalTriggerButton },
@@ -68,6 +69,10 @@ export default {
     ...mapActions(useAlertsStore, ["showAlert"]),
     ...mapActions(useAbsencesStore, ["getAll", "create", "update", "delete"]),
 
+    todayAsString() {
+      return todayAsString();
+    },
+
     getKidName() {
       const kid = this.getById(this.id);
       return kid.firstName + " " + kid.lastName;
@@ -90,7 +95,7 @@ export default {
       }, 100);
     },
 
-    showUpdateAbsenceModal(changeEvent, typeOfChange, absence) {
+    showUpdateAbsenceModal(typeOfChange, absence) {
       this.absenceForUpdate = absence;
       this.absenceUpdateType = typeOfChange;
 
@@ -152,20 +157,18 @@ export default {
                 <input
                   class="form-control"
                   type="date"
+                  :min="todayAsString()"
                   v-model="absence.start"
-                  @change="
-                    (event) => showUpdateAbsenceModal(event, 'START', absence)
-                  "
+                  @change="showUpdateAbsenceModal('START', absence)"
                 />
               </td>
               <td>
                 <input
                   class="form-control"
                   type="date"
+                  :min="todayAsString()"
                   v-model="absence.end"
-                  @change="
-                    (event) => showUpdateAbsenceModal(event, 'END', absence)
-                  "
+                  @change="showUpdateAbsenceModal('END', absence)"
                 />
               </td>
               <td>
@@ -196,6 +199,7 @@ export default {
       id="newAbsenceStart"
       class="form-control mb-3"
       type="date"
+      :min="todayAsString()"
       v-model="newAbsence.start"
     />
 
@@ -204,6 +208,7 @@ export default {
       id="newAbsenceEnd"
       class="form-control"
       type="date"
+      :min="todayAsString()"
       v-model="newAbsence.end"
     />
   </Modal>

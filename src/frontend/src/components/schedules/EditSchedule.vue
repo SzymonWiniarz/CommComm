@@ -6,8 +6,9 @@ import { useKidsStore } from "../../stores/kids_store";
 import { useLessonsStore } from "../../stores/lessons_store";
 import { useSchedulesStore } from "../../stores/schedules_store";
 import { useAlertsStore } from "../../stores/alerts_store";
-import LessonPicker from "./LessonPicker.vue";
+import LessonPicker from "../lessons/LessonPicker.vue";
 import DeliveryCheckbox from "./DeliveryCheckbox.vue";
+import { todayAsString } from "../../utils.js";
 
 function generateRandomId() {
   return (Math.random() + 1).toString(36).substring(7);
@@ -52,26 +53,6 @@ export default {
     };
   },
 
-  computed: {
-    todayAsString() {
-      const today = new Date();
-
-      var month = today.getMonth() + 1;
-      var day = today.getDate();
-      var year = today.getFullYear();
-
-      if (month < 10) {
-        month = "0" + month.toString();
-      }
-
-      if (day < 10) {
-        day = "0" + day.toString();
-      }
-
-      return year + "-" + month + "-" + day;
-    },
-  },
-
   methods: {
     ...mapActions(useKidsStore, ["getById"]),
     ...mapActions(useLessonsStore, ["getAllLessons"]),
@@ -82,6 +63,10 @@ export default {
       "getCustomSchedule",
     ]),
     ...mapActions(useAlertsStore, ["showAlert"]),
+
+    todayAsString() {
+      return todayAsString();
+    },
 
     getKidName() {
       const kid = this.getById(this.id);
@@ -233,7 +218,7 @@ export default {
                   :id="'customScheduleEntryDate-' + customDay.id"
                   class="form-control"
                   type="date"
-                  :min="todayAsString"
+                  :min="todayAsString()"
                   v-model="customDay.date"
                 />
               </td>

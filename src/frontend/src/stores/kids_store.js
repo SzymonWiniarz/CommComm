@@ -20,6 +20,11 @@ export const useKidsStore = defineStore("kids", {
             this.kids = this.kids.filter((kid) => kid.id != id);
         },
 
+        update(kid) {
+            this.delete(kid.id);
+            this.kids.push(kid);
+        },
+
         getById(id) {
             const foundKid = this.kids.find((kid) => kid.id == id);
 
@@ -32,9 +37,40 @@ export const useKidsStore = defineStore("kids", {
             return this.kids.map((kid) => Object.assign({}, kid));
         },
 
-        update(kid) {
-            this.delete(kid.id);
-            this.kids.push(kid);
+        getAllForCommuting() {
+            const myKids = this.getAll();
+            const otherKids = [
+                {
+                    id: 100,
+                    firstName: "Franek",
+                    lastName: "Koc",
+                    sex: "BOY",
+                    doesNeedBabySeat: false
+                },
+                {
+                    id: 101,
+                    firstName: "Faustyna",
+                    lastName: "Koc",
+                    sex: "GIRL",
+                    doesNeedBabySeat: true
+                },
+                {
+                    id: 102,
+                    firstName: "Łucja",
+                    lastName: "Koc",
+                    sex: "GIRL",
+                    doesNeedBabySeat: true
+                },
+                {
+                    id: 103,
+                    firstName: "Marianna",
+                    lastName: "Książek",
+                    sex: "GIRL",
+                    doesNeedBabySeat: false
+                }
+            ]
+
+            return myKids.concat(otherKids);
         }
     }
 

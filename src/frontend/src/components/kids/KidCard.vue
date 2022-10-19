@@ -3,9 +3,16 @@ import EditIcon from "../icons/EditIcon.vue";
 import DeleteIcon from "../icons/DeleteIcon.vue";
 import CalendarIcon from "../icons/CalendarIcon.vue";
 import ModalTriggerButton from "../modal/ModalTriggerButton.vue";
+import AbsenceIcon from "../icons/AbsenceIcon.vue";
 
 export default {
-  components: { EditIcon, DeleteIcon, ModalTriggerButton, CalendarIcon },
+  components: {
+    EditIcon,
+    DeleteIcon,
+    ModalTriggerButton,
+    CalendarIcon,
+    AbsenceIcon,
+  },
 
   props: {
     kid: Object,
@@ -32,7 +39,7 @@ export default {
     },
   },
 
-  emits: ["deleteKidRequested"]
+  emits: ["deleteKidRequested"],
 };
 </script>
 
@@ -57,9 +64,14 @@ export default {
           ><EditIcon
         /></router-link>
         <router-link
-          class="btn btn-primary cc-quick-action-button"
+          class="btn btn-secondary cc-quick-action-button"
           :to="'/dzieci/' + kid.id + '/plan'"
           ><CalendarIcon
+        /></router-link>
+        <router-link
+          class="btn btn-secondary cc-quick-action-button"
+          :to="'/dzieci/' + kid.id + '/nieobecnosci'"
+          ><AbsenceIcon
         /></router-link>
         <ModalTriggerButton
           buttonClass="btn-danger cc-quick-action-button"

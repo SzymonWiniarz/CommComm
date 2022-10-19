@@ -5,7 +5,8 @@ import Kids from './components/kids/Kids.vue'
 import Cars from './components/cars/Cars.vue'
 import EditCar from './components/cars/EditCar.vue'
 import AddCar from './components/cars/AddCar.vue'
-import Commuting from './components/Commuting.vue'
+import Commuting from './components/commuting/Commuting.vue'
+import DeclareTransportToSchool from './components/commuting/DeclareTransportToSchool.vue'
 import EditUser from './components/user/EditUser.vue'
 import AddKid from './components/kids/AddKid.vue'
 import EditKid from './components/kids/EditKid.vue'
@@ -56,6 +57,10 @@ const routes = [
     {
         path: '/przewozy',
         component: Commuting
+    },
+    {
+        path: '/dowozy/dodaj',
+        component: DeclareTransportToSchool
     },
     {
         path: '/uzytkownicy/:id',
