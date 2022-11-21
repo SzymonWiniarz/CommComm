@@ -6,7 +6,7 @@ import Cars from './components/cars/Cars.vue'
 import EditCar from './components/cars/EditCar.vue'
 import AddCar from './components/cars/AddCar.vue'
 import Commuting from './components/commuting/Commuting.vue'
-import DeclareTransportToSchool from './components/commuting/DeclareTransportToSchool.vue'
+import DeclareTransport from './components/commuting/DeclareTransport.vue'
 import EditUser from './components/user/EditUser.vue'
 import AddKid from './components/kids/AddKid.vue'
 import EditKid from './components/kids/EditKid.vue'
@@ -60,7 +60,31 @@ const routes = [
     },
     {
         path: '/dowozy/dodaj',
-        component: DeclareTransportToSchool
+        component: DeclareTransport,
+        props: {
+            direction: 'TO'
+        }
+    },
+    {
+        path: '/odbiory/dodaj',
+        component: DeclareTransport,
+        props: {
+            direction: 'FROM'
+        }
+    },
+    {
+        path: '/dowozy/:id',
+        component: EditTransport,
+        props: {
+            direction: 'TO'
+        }
+    },
+    {
+        path: '/odbiory/:id',
+        component: EditTransport,
+        props: {
+            direction: 'FROM'
+        }
     },
     {
         path: '/uzytkownicy/:id',

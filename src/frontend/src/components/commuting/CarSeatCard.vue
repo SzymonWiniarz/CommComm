@@ -15,6 +15,10 @@ export default {
       return "seatReserved-" + this.seat.id;
     },
 
+    seatNoteId() {
+      return "seatNote-" + this.seat.id;
+    },
+
     seatType() {
       return (
         "Miejsce " + (this.seat.hasBabySeat ? "z fotelikiem" : "bez fotelika")
@@ -31,7 +35,9 @@ export default {
       }
 
       if (this.seat.kidId) {
-        const selectedKid = this.availableKids.find(kid => kid.id == this.seat.kidId);
+        const selectedKid = this.availableKids.find(
+          (kid) => kid.id == this.seat.kidId
+        );
 
         if (selectedKid.sex == "GIRL") {
           return "cc-status-girl";
@@ -58,6 +64,7 @@ export default {
     isKidSelectionDisabled(newValue) {
       if (newValue == true) {
         this.seat.kidId = null;
+        this.seat.note = null;
       }
     },
   },
@@ -102,7 +109,7 @@ export default {
           />
           <label :for="seatReservedCheckboxId">Zajęte</label>
         </div>
-        <div>
+        <div class="mb-3">
           <select
             class="form-select"
             aria-label="Wybierz dziecko"
@@ -114,6 +121,18 @@ export default {
               {{ getKidFullName(kid) }}
             </option>
           </select>
+        </div>
+        <div>
+          <label :for="seatNoteId" class="form-label"
+            >Wiadomość dla rodziców</label
+          >
+          <textarea
+            class="form-control"
+            :id="seatNoteId"
+            rows="3"
+            :disabled="isKidSelectionDisabled"
+            v-model="seat.note"
+          ></textarea>
         </div>
       </div>
     </div>
