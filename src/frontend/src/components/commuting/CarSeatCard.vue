@@ -116,7 +116,7 @@ export default {
             :disabled="isKidSelectionDisabled"
             v-model="seat.kidId"
           >
-            <option selected value="null">Wybierz dziecko</option>
+            <option selected :value="null">Wybierz dziecko</option>
             <option v-for="kid in availableKids" :value="kid.id" :key="kid.id">
               {{ getKidFullName(kid) }}
             </option>

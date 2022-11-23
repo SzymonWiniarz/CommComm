@@ -1,12 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Dashboard from './components/Dashboard.vue'
+import Dashboard from './components/dashboard/Dashboard.vue'
 import Kids from './components/kids/Kids.vue'
 import Cars from './components/cars/Cars.vue'
 import EditCar from './components/cars/EditCar.vue'
 import AddCar from './components/cars/AddCar.vue'
 import Commuting from './components/commuting/Commuting.vue'
 import DeclareTransport from './components/commuting/DeclareTransport.vue'
+import EditTransport from './components/commuting/EditTransport.vue'
 import EditUser from './components/user/EditUser.vue'
 import AddKid from './components/kids/AddKid.vue'
 import EditKid from './components/kids/EditKid.vue'
@@ -75,16 +76,12 @@ const routes = [
     {
         path: '/dowozy/:id',
         component: EditTransport,
-        props: {
-            direction: 'TO'
-        }
+        props: route => ({direction: "TO", id: route.params.id})
     },
     {
         path: '/odbiory/:id',
         component: EditTransport,
-        props: {
-            direction: 'FROM'
-        }
+        props: route => ({direction: "FROM", id: route.params.id})
     },
     {
         path: '/uzytkownicy/:id',

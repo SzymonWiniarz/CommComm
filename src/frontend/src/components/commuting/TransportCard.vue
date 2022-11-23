@@ -4,6 +4,7 @@ import DeleteIcon from "../icons/DeleteIcon.vue";
 import ModalTriggerButton from "../modal/ModalTriggerButton.vue";
 import { mapActions } from "pinia";
 import { useLessonsStore } from "../../stores/lessons_store";
+import { dayFriendlyLabel } from "../../utils.js";
 
 export default {
   components: { EditIcon, DeleteIcon, ModalTriggerButton },
@@ -15,13 +16,14 @@ export default {
   computed: {
     cardTitle() {
       const day = this.transport.day;
+      const dayLabel = dayFriendlyLabel(new Date(day));
       const lesson = this.getAllLessons().find(
         (lesson) => lesson.id == this.transport.lessonId
       );
       const time =
         this.transport.direction == "TO" ? lesson.startsAt : lesson.endsAt;
 
-      return day + " " + time;
+      return dayLabel + " godz. " + time;
     },
 
     editUrl() {
